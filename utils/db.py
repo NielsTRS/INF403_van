@@ -41,8 +41,26 @@ def mise_a_jour_bd(conn: sqlite3.Connection, file: str):
 
     # Exécution de toutes les requêtes du tableau
     cursor = conn.cursor()
-    for query in sqlQueries:
-        cursor.execute(query)
-
+    try:
+        for query in sqlQueries:
+            cursor.execute(query)
+        print("OK")
+    except sqlite3.Error as e:
+        print("PAS OK", e)
     # Validation des modifications
     conn.commit()
+
+
+def vider_base(conn : sqlite3.Connection):
+    """
+    Permet de vider la base de donnée initalisée
+
+    :param conn: Connexion à la base de données
+    """
+    tables = ["Personnes", "ModeleAppareils", "Appareils", "Evenements", "Reparations"]
+    cursor = conn.cursor()
+    for table in tables:
+        cursor.execute("DELETE FROM " + table)
+    conn.commit()
+
+
