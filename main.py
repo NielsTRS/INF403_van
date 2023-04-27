@@ -30,8 +30,9 @@ def main():
 
     # Remplir la BD
     print("1. On crée la bd et on l'initialise avec des premières valeurs.")
-    db.mise_a_jour_bd(conn, "data/van_creation.sql")
-    # db.mise_a_jour_bd(conn, "data/voile_inserts_ok.sql")
+    db.mise_a_jour_bd(conn, "data/creation.sql")
+    #db.mise_a_jour_bd(conn, "data/insert_nok.sql")
+    db.mise_a_jour_bd(conn, "data/insert_ok.sql")
 
     # Lire la BD
     print("2. Liste de tous les clients")
