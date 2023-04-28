@@ -31,7 +31,6 @@ def mise_a_jour_bd(conn: sqlite3.Connection, file: str):
     :param file: Chemin d'accès au fichier contenant les requêtes
     :type file: str
     """
-
     # Lecture du fichier et placement des requêtes dans un tableau
     sqlQueries = []
 
@@ -50,6 +49,31 @@ def mise_a_jour_bd(conn: sqlite3.Connection, file: str):
     # Validation des modifications
     conn.commit()
 
+def executer_commande_sql(conn: sqlite3.Connection, commande: str)->list:
+    """
+    Exécute une commande SQL et retourne le résultat sous forme de liste (pour un SELECT par exemple)
+
+    :param commande: Commande SQL à exécuter
+    :return: Liste des réultats de la commande
+    """
+    cursor = conn.cursor()
+    cur = cursor.execute(commande)
+    execution = cur.fetchall()
+    if(len(execution) == 0):    #la requête ne renvoie aucun retour
+        commandeSplit = commande.split(" ")
+        if(commandeSplit[0].capitalize() == "Select"):  #si il s'agit d'une requete select qui ne renvoie aucune donnée
+            print("Aucune donnée ne correspond à la requête")
+            return []
+        print("La commande a été effectuée avec succès")   #si c'est INSERT INTO, DELETE ou UPDATE, alors il n'y a pas de retour
+        return []  
+    else:       #si c'est une requête SELECT on renvoie les données
+        colonnes = cur.description
+        colonnesInsert = []
+        for col in colonnes:
+            colonnesInsert.append(col[0])
+        tupleInsert = tuple(colonnesInsert)
+        execution.insert(0, tupleInsert)
+        return execution
 
 def vider_base(conn : sqlite3.Connection):
     """
@@ -64,3 +88,9 @@ def vider_base(conn : sqlite3.Connection):
     conn.commit()
 
 
+def afficher_resultats(resultats: list):
+    for row in resultats:
+        #print('%-25s' % 'Desc', 'Test')
+        for enr in row:
+            print('%-20s' % enr, end ="")
+        print("")

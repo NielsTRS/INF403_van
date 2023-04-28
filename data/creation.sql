@@ -29,7 +29,7 @@ CREATE TABLE ModeleAppareils
 
 CREATE TABLE Appareils
 (
-    numeroDeSerie_appareil INT NOT NULL,
+    numeroDeSerie_appareil VARCHAR(255) NOT NULL,
     numero_appareil        INT NOT NULL,
     proprietaire_appareil  INT NOT NULL,
     CONSTRAINT pk_app_num_serie PRIMARY KEY (numeroDeSerie_appareil),
@@ -40,7 +40,7 @@ CREATE TABLE Appareils
 CREATE TABLE Reparations
 (
     numero_reparation      INT NOT NULL,
-    appareil_repare        INT NOT NULL,
+    appareil_repare        VARCHAR(255) NOT NULL,
     evenement_reparation   INT NOT NULL,
     prix_reparation        DECIMAL(10, 2),
     duree_reparation       INT,
