@@ -49,7 +49,8 @@ def mise_a_jour_bd(conn: sqlite3.Connection, file: str):
     # Validation des modifications
     conn.commit()
 
-def executer_commande_sql(conn: sqlite3.Connection, commande: str)->list:
+
+def executer_commande_sql(conn: sqlite3.Connection, commande: str) -> list:
     """
     Exécute une commande SQL et retourne le résultat sous forme de liste (pour un SELECT par exemple)
 
@@ -59,14 +60,16 @@ def executer_commande_sql(conn: sqlite3.Connection, commande: str)->list:
     cursor = conn.cursor()
     cur = cursor.execute(commande)
     execution = cur.fetchall()
-    if(len(execution) == 0):    #la requête ne renvoie aucun retour
+    if (len(execution) == 0):  # la requête ne renvoie aucun retour
         commandeSplit = commande.split(" ")
-        if(commandeSplit[0].capitalize() == "Select"):  #si il s'agit d'une requete select qui ne renvoie aucune donnée
+        if (commandeSplit[
+            0].capitalize() == "Select"):  # si il s'agit d'une requete select qui ne renvoie aucune donnée
             print("Aucune donnée ne correspond à la requête")
             return []
-        print("La commande a été effectuée avec succès")   #si c'est INSERT INTO, DELETE ou UPDATE, alors il n'y a pas de retour
-        return []  
-    else:       #si c'est une requête SELECT on renvoie les données
+        print(
+            "La commande a été effectuée avec succès")  # si c'est INSERT INTO, DELETE ou UPDATE, alors il n'y a pas de retour
+        return []
+    else:  # si c'est une requête SELECT on renvoie les données
         colonnes = cur.description
         colonnesInsert = []
         for col in colonnes:
@@ -75,7 +78,8 @@ def executer_commande_sql(conn: sqlite3.Connection, commande: str)->list:
         execution.insert(0, tupleInsert)
         return execution
 
-def vider_base(conn : sqlite3.Connection):
+
+def vider_base(conn: sqlite3.Connection):
     """
     Permet de vider la base de donnée initalisée
 
@@ -90,7 +94,7 @@ def vider_base(conn : sqlite3.Connection):
 
 def afficher_resultats(resultats: list):
     for row in resultats:
-        #print('%-25s' % 'Desc', 'Test')
+        # print('%-25s' % 'Desc', 'Test')
         for enr in row:
-            print('%-20s' % enr, end ="")
+            print('%-20s' % enr, end="")
         print("")

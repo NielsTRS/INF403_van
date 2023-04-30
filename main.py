@@ -19,16 +19,18 @@ def menu_principal(conn):
     entree = input("Entrez votre choix : ")
     print("----")
 
-    if (entree == "1"):
+    if entree == "1":
         executer_requete(conn)
-    elif (entree == "2"):
+    elif entree == "2":
         menu_afficher_donnees(conn)
-    elif (entree == "3"):
+    elif entree == "3":
         menu_modifier_donnees(conn)
-    elif (entree == "4"):
+    elif entree == "4":
         select_tous_les_clients(conn)
-        #menu_supprimer_donnees(conn)
-    elif (entree == "5"):
+        # menu_supprimer_donnees(conn)
+    elif entree == "5":
+        # Fermeture de la connexion
+        conn.close()
         exit()
     else:
         print("Choix invalide")
@@ -47,11 +49,11 @@ def menu_afficher_donnees(conn):
 
     entree = input("Entrez votre choix : ")
     print("----")
-    if(entree == "1"):
+    if entree == "1":
         afficher_tables(conn)
-    elif(entree == "2"):       #afficher la liste des réparations de smartphone
+    elif entree == "2":  # afficher la liste des réparations de smartphone
         afficher_reparations(conn)
-    elif(entree == "3"):
+    elif entree == "3":
         menu_principal(conn)
     else:
         print("Entrée invalide")
@@ -64,16 +66,16 @@ def afficher_tables(conn):
 
     :param conn: Connexion à la base de données
     """
-    tables = ["Reparations", "Evenements","Appareils", "ModeleAppareils", "Personnes"]
-    for (i,table) in enumerate(tables):
-        print(i,":", table)
+    tables = ["Reparations", "Evenements", "Appareils", "ModeleAppareils", "Personnes"]
+    for (i, table) in enumerate(tables):
+        print(i, ":", table)
     entree = input("Nom de la table à afficher : ")
-    if(entree in ["0", "1", "2", "3", "4"]):  #l'utilisateur a choisi une table qui existe
+    if entree in ["0", "1", "2", "3", "4"]:  # l'utilisateur a choisi une table qui existe
         commande = "SELECT * FROM " + tables[int(entree)] + ";"
         execution = db.executer_commande_sql(conn, commande)
         db.afficher_resultats(execution)
         menu_afficher_donnees(conn)
-    else:           # l'utilisateur a choisi une table qui n'existe pas
+    else:  # l'utilisateur a choisi une table qui n'existe pas
         print("Entrée invalide")
         afficher_tables(conn)
 
@@ -89,14 +91,14 @@ def afficher_reparations(conn):
     for (i, type) in enumerate(types):
         print(i, ":", type)
     entree = input("Entrez votre choix : ")
-    if(entree in ["0", "1", "2", "3"]):
+    if entree in ["0", "1", "2", "3"]:
         commande = """SELECT appareil_repare AS numeroDeSerie, prix_reparation, duree_reparation, description_reparation, marque_appareil, modele_appareil FROM Reparations R 
         JOIN Appareils A ON R.appareil_repare = A.numeroDeSerie_appareil 
         JOIN ModeleAppareils M USING(numero_appareil)
         WHERE type_appareil = '""" + types[int(entree)] + "';"
         execution = db.executer_commande_sql(conn, commande)
         db.afficher_resultats(execution)
-    elif(entree == "4"):
+    elif entree == "4":
         commande = """SELECT appareil_repare AS numeroDeSerie, prix_reparation, duree_reparation, description_reparation, marque_appareil, modele_appareil, type_appareil FROM Reparations R 
         JOIN Appareils A ON R.appareil_repare = A.numeroDeSerie_appareil 
         JOIN ModeleAppareils M USING(numero_appareil);"""
@@ -106,7 +108,6 @@ def afficher_reparations(conn):
         print("Entrée incorrecte")
         afficher_reparations(conn)
     menu_afficher_donnees(conn)
-
 
 
 def menu_modifier_donnees(conn):
@@ -137,7 +138,7 @@ def executer_requete(conn):
         db.afficher_resultats(rows)
         conn.commit()
         reesayer = input("Souhaitez vous faire une autre requête ? (Y/N) : ")
-        if (reesayer == "Y" or reesayer == "y"):
+        if reesayer == "Y" or reesayer == "y":
             executer_requete(conn)
     except:
         print("La requête n'est pas valide")
@@ -150,7 +151,7 @@ def select_tous_les_clients(conn):
 
     :param conn: Connexion à la base de données
     """
-    commande = "SELECT * FROM Reparations WHERE duree_reparation = 'sma';"
+    commande = "SELECT * FROM Personnes;"
     execution = db.executer_commande_sql(conn, commande)
     for row in execution:
         print(row)
@@ -215,9 +216,6 @@ def main():
     # Afficher le menu
     while True:
         menu_principal(conn)
-
-    # Fermeture de la connexion
-    conn.close()
 
 
 if __name__ == "__main__":
