@@ -157,43 +157,6 @@ def select_tous_les_clients(conn):
         print(row)
 
 
-def select_union(conn):
-    """
-    Affiche la liste de tous les bateaux.
-
-    :param conn: Connexion à la base de données
-    """
-    cur = conn.cursor()
-    cur.execute("""
-                
-                """)
-
-    rows = cur.fetchall()
-
-    for row in rows:
-        print(row)
-
-
-def select_jointure(conn):
-    """
-    Affiche la liste de tous les bateaux.
-
-    :param conn: Connexion à la base de données
-    """
-    cur = conn.cursor()
-    cur.execute("""
-                SELECT * FROM 
-                Personnes P
-                JOIN Appareils A JOIN ModeleAppareils M
-                ON (P.numero_personne = A.proprietaire_appareil AND A.numero_appareil = M.numero_appareil)
-                """)
-
-    rows = cur.fetchall()
-
-    for row in rows:
-        print(row)
-
-
 def main():
     # Nom de la BD à créer
     db_file = "data/van.db"
