@@ -95,7 +95,6 @@ def vider_base(conn: sqlite3.Connection):
 
 def afficher_resultats(resultats: list):
     for row in resultats:
-        # print('%-25s' % 'Desc', 'Test')
         for enr in row:
             print('%-20s' % enr, end="")
         print("")

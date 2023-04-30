@@ -1,9 +1,9 @@
+DROP VIEW IF EXISTS Reparations_view;
 DROP TABLE IF EXISTS Reparations;
 DROP TABLE IF EXISTS Evenements;
 DROP TABLE IF EXISTS Appareils;
 DROP TABLE IF EXISTS ModeleAppareils;
 DROP TABLE IF EXISTS Personnes;
-
 
 CREATE TABLE Personnes
 (
@@ -30,8 +30,8 @@ CREATE TABLE ModeleAppareils
 CREATE TABLE Appareils
 (
     numeroDeSerie_appareil VARCHAR(255) NOT NULL,
-    numero_appareil        INT NOT NULL,
-    proprietaire_appareil  INT NOT NULL,
+    numero_appareil        INT          NOT NULL,
+    proprietaire_appareil  INT          NOT NULL,
     CONSTRAINT pk_app_num_serie PRIMARY KEY (numeroDeSerie_appareil),
     CONSTRAINT fk_app_num FOREIGN KEY (numero_appareil) REFERENCES ModeleAppareils (numero_appareil),
     CONSTRAINT fk_app_pers FOREIGN KEY (proprietaire_appareil) REFERENCES Personnes (numero_personne)
@@ -39,9 +39,9 @@ CREATE TABLE Appareils
 
 CREATE TABLE Reparations
 (
-    numero_reparation      INT NOT NULL,
+    numero_reparation      INT          NOT NULL,
     appareil_repare        VARCHAR(255) NOT NULL,
-    evenement_reparation   INT NOT NULL,
+    evenement_reparation   INT          NOT NULL,
     prix_reparation        DECIMAL(10, 2),
     duree_reparation       INT,
     description_reparation VARCHAR(255),
@@ -58,3 +58,28 @@ CREATE TABLE Evenements
     ville_evenement     VARCHAR(255),
     CONSTRAINT pk_even_num PRIMARY KEY (numero_evenement)
 );
+
+CREATE VIEW Reparations_view
+            (
+             client_nom,
+             numeroDeSerie,
+             prix_reparation,
+             duree_reparation,
+             description_reparation,
+             marque_appareil,
+             modele_appareil,
+             type_appareil
+                )
+AS
+SELECT nom_personne    AS client_nom,
+       appareil_repare AS numeroDeSerie,
+       prix_reparation,
+       duree_reparation,
+       description_reparation,
+       marque_appareil,
+       modele_appareil,
+       type_appareil
+FROM Reparations R
+         JOIN Appareils A ON R.appareil_repare = A.numeroDeSerie_appareil
+         JOIN Personnes P ON A.proprietaire_appareil = P.numero_personne
+         JOIN ModeleAppareils M USING (numero_appareil);

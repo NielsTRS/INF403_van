@@ -92,16 +92,12 @@ def afficher_reparations(conn):
         print(i, ":", type)
     entree = input("Entrez votre choix : ")
     if entree in ["0", "1", "2", "3"]:
-        commande = """SELECT appareil_repare AS numeroDeSerie, prix_reparation, duree_reparation, description_reparation, marque_appareil, modele_appareil FROM Reparations R 
-        JOIN Appareils A ON R.appareil_repare = A.numeroDeSerie_appareil 
-        JOIN ModeleAppareils M USING(numero_appareil)
+        commande = """SELECT * FROM Reparations_view
         WHERE type_appareil = '""" + types[int(entree)] + "';"
         execution = db.executer_commande_sql(conn, commande)
         db.afficher_resultats(execution)
     elif entree == "4":
-        commande = """SELECT appareil_repare AS numeroDeSerie, prix_reparation, duree_reparation, description_reparation, marque_appareil, modele_appareil, type_appareil FROM Reparations R 
-        JOIN Appareils A ON R.appareil_repare = A.numeroDeSerie_appareil 
-        JOIN ModeleAppareils M USING(numero_appareil);"""
+        commande = """SELECT * FROM Reparations_view"""
         execution = db.executer_commande_sql(conn, commande)
         db.afficher_resultats(execution)
     else:
