@@ -54,16 +54,17 @@ def executer_commande_sql(conn: sqlite3.Connection, commande: str) -> list:
     """
     Exécute une commande SQL et retourne le résultat sous forme de liste (pour un SELECT par exemple)
 
+    :param conn: Connexion à la base de données
+    :type conn: sqlite3.Connection
     :param commande: Commande SQL à exécuter
     :return: Liste des réultats de la commande
     """
     cursor = conn.cursor()
     cur = cursor.execute(commande)
     execution = cur.fetchall()
-    if (len(execution) == 0):  # la requête ne renvoie aucun retour
+    if len(execution) == 0:  # la requête ne renvoie aucun retour
         commandeSplit = commande.split(" ")
-        if (commandeSplit[
-            0].capitalize() == "Select"):  # si il s'agit d'une requete select qui ne renvoie aucune donnée
+        if commandeSplit[0].capitalize() == "Select":  # si il s'agit d'une requete select qui ne renvoie aucune donnée
             print("Aucune donnée ne correspond à la requête")
             return []
         print(
