@@ -10,7 +10,7 @@ CREATE TABLE Personnes
     numero_personne INTEGER      NOT NULL,
     nom_personne    VARCHAR(255) NOT NULL,
     prenom_personne VARCHAR(255) NOT NULL,
-    email_personne  VARCHAR(255),
+    email_personne  VARCHAR(255) NOT NULL,
     CONSTRAINT pk_pers_num PRIMARY KEY (numero_personne AUTOINCREMENT),
     CONSTRAINT unique_email UNIQUE(email_personne)
 );
@@ -35,8 +35,8 @@ CREATE TABLE Appareils
     proprietaire_appareil  INTEGER      NOT NULL,
     CONSTRAINT pk_app_num_serie PRIMARY KEY (numeroDeSerie_appareil),
     CONSTRAINT unique_numeroSerie UNIQUE(numeroDeSerie_appareil)
-    CONSTRAINT fk_app_num FOREIGN KEY (numero_appareil) REFERENCES ModeleAppareils (numero_appareil) ON DELETE CASCADE,
-    CONSTRAINT fk_app_pers FOREIGN KEY (proprietaire_appareil) REFERENCES Personnes (numero_personne) ON DELETE CASCADE
+    CONSTRAINT fk_app_num FOREIGN KEY (numero_appareil) REFERENCES ModeleAppareils (numero_appareil) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_app_pers FOREIGN KEY (proprietaire_appareil) REFERENCES Personnes (numero_personne) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Reparations
@@ -48,8 +48,8 @@ CREATE TABLE Reparations
     duree_reparation       INTEGER,
     description_reparation VARCHAR(255),
     CONSTRAINT pk_rep_num PRIMARY KEY (numero_reparation AUTOINCREMENT),
-    CONSTRAINT fk_rep_num_app FOREIGN KEY (appareil_repare) REFERENCES Appareils (numeroDeSerie_appareil) ON DELETE CASCADE,
-    CONSTRAINT fk_rep_even FOREIGN KEY (evenement_reparation) REFERENCES Evenements (numero_evenement) ON DELETE CASCADE
+    CONSTRAINT fk_rep_num_app FOREIGN KEY (appareil_repare) REFERENCES Appareils (numeroDeSerie_appareil) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_rep_even FOREIGN KEY (evenement_reparation) REFERENCES Evenements (numero_evenement) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Evenements
