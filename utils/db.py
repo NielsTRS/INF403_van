@@ -50,7 +50,7 @@ def mise_a_jour_bd(conn: sqlite3.Connection, file: str):
     conn.commit()
 
 
-def executer_commande_sql(conn: sqlite3.Connection, commande: str) -> list:
+def executer_commande_sql(commande: str, file ="data/van.db") -> list:
     """
     Exécute une commande SQL et retourne le résultat sous forme de liste (pour un SELECT par exemple)
 
@@ -59,9 +59,12 @@ def executer_commande_sql(conn: sqlite3.Connection, commande: str) -> list:
     :param commande: Commande SQL à exécuter
     :return: Liste des réultats de la commande
     """
+    conn = creer_connexion(file)
     cursor = conn.cursor()
     cur = cursor.execute(commande)
     execution = cur.fetchall()
+    conn.commit()
+    conn.close()
     if len(execution) == 0:  # la requête ne renvoie aucun retour
         commandeSplit = commande.split(" ")
         if commandeSplit[0].capitalize() == "Select":  # si il s'agit d'une requete select qui ne renvoie aucune donnée

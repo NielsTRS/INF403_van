@@ -20,7 +20,7 @@ INSERT INTO Evenements
 VALUES (1, '2023-05-01', '14:00', '17:00' , 'Grenoble');
 
 INSERT INTO Reparations ('appareil_repare', 'evenement_reparation', 'prix_reparation', 'duree_reparation', 'description_reparation')
-VALUES ("MG4HQ1", 1, 20.99, 20, 'Remplacement de la ram');
+VALUES ("MG4HQ1", 1, 20.99, 20, 'Remplacement de ram');
 
 INSERT INTO Reparations ('appareil_repare', 'evenement_reparation', 'prix_reparation', 'duree_reparation', 'description_reparation')
-VALUES ("ABC123", 1, 50.99, 50, 'Remplacement de la batterie');
+VALUES ("ABC123", 1, 50.99, 50, 'Remplacement de batterie');

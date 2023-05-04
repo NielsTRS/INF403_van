@@ -1,13 +1,10 @@
 from utils import db
 import main
 from utils import const
-import ajout
-
-def menu_supprimer_donnees(conn):
+def menu_supprimer_donnees():
     """
     Menu de suppression des données
 
-    :param conn: Connexion à la base de données
     """
     print("---- Menu suppression ----")
     print("1. Supprimer une personne")
@@ -20,41 +17,40 @@ def menu_supprimer_donnees(conn):
     entree = input("Entrez votre choix : ")
     print("----")
     if(entree == "1"):
-        supprimer_entree(conn, "Personnes")
+        supprimer_entree( "Personnes")
     elif(entree == "2"):
-        supprimer_entree(conn, "Appareils")
+        supprimer_entree( "Appareils")
     elif(entree == "3"):
-        supprimer_entree(conn, "Reparations")
+        supprimer_entree( "Reparations")
     elif(entree == "4"):
-        supprimer_entree(conn, "Evenements")
+        supprimer_entree( "Evenements")
     elif(entree == "5"):
-        supprimer_entree(conn, "ModeleAppareils")
+        supprimer_entree( "ModeleAppareils")
     elif(entree == "6"):
-        main.menu_principal(conn)
+        main.menu_principal()
     else:
         print("Choix invalide")
-        menu_supprimer_donnees(conn)
+        menu_supprimer_donnees()
 
-def supprimer_entree(conn, table):
+def supprimer_entree( table):
     """
     Permet le choix d'une ligne à supprimer dans une table, ainsi que la suppression de cette ligne
 
-    :param conn: Connexion à la base de données
     """
     commande = "SELECT * FROM " + table + ";"
-    execution = db.executer_commande_sql(conn, commande)
+    execution = db.executer_commande_sql( commande)
     if(len(execution) == 0):
         print("Il n'y a rien à supprimer")
-        menu_supprimer_donnees(conn)
+        menu_supprimer_donnees()
         return
     db.afficher_resultats(execution)
     aSupprimer = input("Entrez le numéro " +  printDeSerie(table) + const.getSingularTableName(table) +" à supprimer : ")
     # on verifie que la ligne a supprimer existe
     if(table == "Appareils"):
-        while not ajout.verifierSiColonneExiste(aSupprimer, execution):
+        while not const.verifierSiColonneExiste(aSupprimer, execution):
             aSupprimer = input("Ce numéro de série n'existe pas, veuillez entrer un modèle valide : ")
     else:
-        while not ajout.verifierSiColonneExiste(int(aSupprimer), execution):
+        while not const.verifierSiColonneExiste(aSupprimer, execution):
             aSupprimer = input("Ce numéro n'existe pas, veuillez entrer un modèle valide : ")
     commande = "DELETE FROM " + table + " WHERE " + const.getPrimaryKey(table) +" = '" + aSupprimer + "';"
     if(table =="Personnes"):
@@ -69,18 +65,18 @@ def supprimer_entree(conn, table):
     if(entree == "y"):
         pass
     elif(entree == "n"):
-        menu_supprimer_donnees(conn)
+        menu_supprimer_donnees()
         return
     else:
         print("Choix invalide")
-        menu_supprimer_donnees(conn)
+        menu_supprimer_donnees()
         return
     try:
-        execution = db.executer_commande_sql(conn, commande)
+        execution = db.executer_commande_sql( commande)
         db.afficher_resultats(execution)
     except Exception as e:
         print("Erreur impossible de supprimer :", e)
-    menu_supprimer_donnees(conn)
+    menu_supprimer_donnees()
 
 def printDeSerie(table):
     if table == "Appareils":

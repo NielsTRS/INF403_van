@@ -7,7 +7,7 @@ import modification
 import ajout
 
 
-def menu_principal(conn):
+def menu_principal():
     """
     Menu principal du programme
 
@@ -25,37 +25,38 @@ def menu_principal(conn):
     print("----")
 
     if entree == "1":
-        executer_requete(conn)
+        executer_requete()
     elif entree == "2":
-        affichage.menu_afficher_donnees(conn)
+        affichage.menu_afficher_donnees()
     elif entree == "3":
-        modification.menu_modifier_donnees(conn)
+        modification.menu_modifier_donnees()
     elif entree == "4":
-        suppression.menu_supprimer_donnees(conn)
+        suppression.menu_supprimer_donnees()
     elif entree == "5":
-        ajout.menu_ajouter_donnees(conn)
+        ajout.menu_ajouter_donnees()
     elif entree == "6":
-        # Fermeture de la connexion
-        conn.close()
+        # Fermeture du programme
         exit()
     else:
         print("Choix invalide")
 
-def executer_requete(conn):
+def executer_requete():
     requete = input('Entrez une requête SQL : ')
-
+    conn = db.creer_connexion("data/van.db")
     cur = conn.cursor()
     try:
         cur.execute(requete)
         rows = cur.fetchall()
         db.afficher_resultats(rows)
-        conn.commit()
+
         reesayer = input("Souhaitez vous faire une autre requête ? (Y/N) : ")
         if reesayer == "Y" or reesayer == "y":
-            executer_requete(conn)
+            executer_requete()
     except:
         print("La requête n'est pas valide")
-        executer_requete(conn)
+        executer_requete()
+    conn.commit()
+    conn.close()
 
 
 def select_tous_les_clients(conn):
@@ -89,9 +90,12 @@ def main():
     print("Insertion d'un fichier de donnés correct : ", end="")
     db.mise_a_jour_bd(conn, "data/insert_ok.sql")
 
+    conn.commit()
+    conn.close()
+
     # Afficher le menu
     while True:
-        menu_principal(conn)
+        menu_principal()
 
 
 if __name__ == "__main__":
