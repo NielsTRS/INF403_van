@@ -66,8 +66,7 @@ def executer_commande_sql(commande: str, file ="data/van.db") -> list:
     conn.commit()
     conn.close()
     if len(execution) == 0:  # la requête ne renvoie aucun retour
-        commandeSplit = commande.split(" ")
-        if commandeSplit[0].capitalize() == "Select":  # si il s'agit d'une requete select qui ne renvoie aucune donnée
+        if "select" in commande.lower():  # si il s'agit d'une requete select qui ne renvoie aucune donnée
             print("Aucune donnée ne correspond à la requête")
             return []
         print(
