@@ -40,6 +40,7 @@ def menu_principal():
     else:
         print("Choix invalide")
 
+
 def executer_requete():
     requete = input('Entrez une requête SQL : ')
     conn = db.creer_connexion("data/van.db")

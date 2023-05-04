@@ -38,7 +38,7 @@ def menu_afficher_donnees():
                         JOIN ModeleAppareils MA ON A.numero_appareil = MA.numero_appareil
                         ORDER BY P.nom_personne;
                         """
-                    # on affiche les appareils de chaque personne, en triant par nom de personne par ordre alphabétique
+        # on affiche les appareils de chaque personne, en triant par nom de personne par ordre alphabétique
         execution = db.executer_commande_sql(commande)
         db.afficher_resultats(execution)
         menu_afficher_donnees()
@@ -47,7 +47,7 @@ def menu_afficher_donnees():
                     JOIN Personnes P ON A.proprietaire_appareil = P.numero_personne 
                     GROUP BY email_personne;
                     """
-                    # on compte le nombre d'appareils de chaque personne, et on affiche le résultat
+        # on compte le nombre d'appareils de chaque personne, et on affiche le résultat
         execution = db.executer_commande_sql(commande)
         db.afficher_resultats(execution)
         menu_afficher_donnees()
@@ -61,15 +61,16 @@ def menu_afficher_donnees():
                     JOIN ModeleAppareils MA USING (numero_appareil)
                     WHERE A.numeroDeSerie_appareil NOT IN (SELECT appareil_repare FROM Reparations)
                     ORDER BY nombreReparations DESC;
-                    """ #on recupere les appareils ayant subi des reparations, et on ajoute les appareils n'ayant jamais subi de reparations, puis on trie par ordre décroissant du nombre de reparations
+                    """  # on recupere les appareils ayant subi des reparations, et on ajoute les appareils n'ayant jamais subi de reparations, puis on trie par ordre décroissant du nombre de reparations
         execution = db.executer_commande_sql(commande)
         db.afficher_resultats(execution)
         menu_afficher_donnees()
-    elif entree == "7": #retour au menu principal
+    elif entree == "7":  # retour au menu principal
         main.menu_principal()
     else:
         print("Entrée invalide")
         menu_afficher_donnees()
+
 
 def afficher_tables():
     """
@@ -102,7 +103,7 @@ def afficher_reparations():
     if entree in ["0", "1", "2", "3"]:
         commande = """SELECT * FROM Reparations_view
         WHERE type_appareil = '""" + types[int(entree)] + "';"
-        execution = db.executer_commande_sql( commande)
+        execution = db.executer_commande_sql(commande)
         db.afficher_resultats(execution)
     elif entree == "4":
         commande = """SELECT * FROM Reparations_view"""

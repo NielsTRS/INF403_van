@@ -1,38 +1,41 @@
 import datetime
 
 tables = {
-    "Personnes":{
-        "nomSing" : "de la personne",
-        "nomPlur" : "des personnes",
+    "Personnes": {
+        "nomSing": "de la personne",
+        "nomPlur": "des personnes",
         "primary_key": "numero_personne",
     },
-    "Appareils":{
-        "nomSing" : "de l'appareil",
-        "nomPlur" : "des appareils",
+    "Appareils": {
+        "nomSing": "de l'appareil",
+        "nomPlur": "des appareils",
         "primary_key": "numeroDeSerie_appareil",
     },
-    "Reparations":{
-        "nomSing" : "de la réparation",
-        "nomPlur" : "des réparations",
+    "Reparations": {
+        "nomSing": "de la réparation",
+        "nomPlur": "des réparations",
         "primary_key": "numero_reparation",
     },
-    "Evenements":{
-        "nomSing" : "de l'évènement",
-        "nomPlur" : "des évènements",
+    "Evenements": {
+        "nomSing": "de l'évènement",
+        "nomPlur": "des évènements",
         "primary_key": "numero_evenement",
     },
-    "ModeleAppareils":{
-        "nomSing" : "du modèle",
-        "nomPlur" : "des modèles",
+    "ModeleAppareils": {
+        "nomSing": "du modèle",
+        "nomPlur": "des modèles",
         "primary_key": "numero_appareil",
     }
 }
 
+
 def getSingularTableName(table):
     return tables[table]["nomSing"]
 
+
 def getPluralTableName(table):
     return tables[table]["nomPlur"]
+
 
 def getPrimaryKey(table):
     return tables[table]["primary_key"]
@@ -46,14 +49,15 @@ def verifierSiColonneExiste(numero, resultat):
     :param resultat: Resultat d'une commande SQL
     :return: True si la colonne existe, False sinon
     """
-    try: 
+    try:
         numero = int(numero)
     except ValueError:
         pass
-    for i in range(1,len(resultat)):
-        if(resultat[i][0] == numero):
+    for i in range(1, len(resultat)):
+        if resultat[i][0] == numero:
             return True
     return False
+
 
 def entreeEstEntier(entree):
     """
@@ -64,12 +68,13 @@ def entreeEstEntier(entree):
     """
     try:
         entierEntree = int(entree)
-        if(entierEntree < 0):
+        if entierEntree < 0:
             return False
         return True
     except ValueError:
         return False
-    
+
+
 def estPrixCorrect(prix):
     """
     Fonction qui vérifie si un prix est correct
@@ -79,19 +84,20 @@ def estPrixCorrect(prix):
     """
     try:
         prixEntier = int(prix)
-        if(prixEntier < 0):
+        if prixEntier < 0:
             return False
         return True
     except ValueError:
         pass
     try:
         prixFlottant = float(prix)
-        if(prixFlottant < 0):
+        if prixFlottant < 0:
             return False
         return True
     except ValueError:
         return False
-    
+
+
 def estDateCorrecte(date):
     """
     Fonction qui vérifie si une date est correcte
@@ -104,7 +110,8 @@ def estDateCorrecte(date):
         return True
     except ValueError:
         return False
-    
+
+
 def estHeureCorrecte(heure):
     """
     Fonction qui vérifie si une heure est correcte

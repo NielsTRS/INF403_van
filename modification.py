@@ -30,6 +30,7 @@ def menu_modifier_donnees():
         print("Choix invalide")
         menu_modifier_donnees()
 
+
 def modifier_personne():
     """
     Fonction qui permet de modifier un champ d'une personne
@@ -38,18 +39,18 @@ def modifier_personne():
     commande = "SELECT * FROM Personnes;"
     personnes = db.executer_commande_sql(commande)
     db.afficher_resultats(personnes)
-    #on recupere ensuite le numero de la personne à modifier
+    # on recupere ensuite le numero de la personne à modifier
     entreeP = input("Entrez le numéro de la personne à modifier : ")
-    while not const.verifierSiColonneExiste(entreeP, personnes):    #on verifie que le numero existe bien
+    while not const.verifierSiColonneExiste(entreeP, personnes):  # on verifie que le numero existe bien
         print("Le numéro entré n'existe pas")
         entreeP = input("Entrez le numéro de la personne à modifier : ")
-    #on recupere ensuite le champ à modifier
+    # on recupere ensuite le champ à modifier
     print("Quel champ voulez-vous modifier ?")
     print("1. Nom")
     print("2. Prénom")
     print("3. Email")
     entree = input("Entrez votre choix : ")
-    while entree != "1" and entree != "2" and entree != "3":    #on verifie que le choix est valide
+    while entree != "1" and entree != "2" and entree != "3":  # on verifie que le choix est valide
         print("Choix invalide")
         entree = input("Entrez votre choix : ")
     if entree == "1":
@@ -67,6 +68,7 @@ def modifier_personne():
         print("Erreur lors de la modification", e)
     menu_modifier_donnees()
 
+
 def modifier_appareil():
     """
     Fonction qui permet de modifier un champ d'un appareil
@@ -75,18 +77,18 @@ def modifier_appareil():
     commande = "SELECT * FROM Appareils;"
     execution = db.executer_commande_sql(commande)
     db.afficher_resultats(execution)
-    #on recupere ensuite le numero de la personne à modifier
+    # on recupere ensuite le numero de la personne à modifier
     entreeP = input("Entrez le numéro de série de l'appareil à modifier : ")
-    while not const.verifierSiColonneExiste(entreeP, execution):    #on verifie que le numero existe bien
+    while not const.verifierSiColonneExiste(entreeP, execution):  # on verifie que le numero existe bien
         print("Le numéro de série entré n'existe pas")
         entreeP = input("Entrez le numéro de série de l'appareil à modifier : ")
-    #on recupere ensuite le champ à modifier
+    # on recupere ensuite le champ à modifier
     print("Quel champ voulez-vous modifier ?")
     print("1. Numéro de série")
     print("2. Modèle")
     print("3. Propriétaire")
     entree = input("Entrez votre choix : ")
-    while entree != "1" and entree != "2" and entree != "3":    #on verifie que le choix est valide
+    while entree != "1" and entree != "2" and entree != "3":  # on verifie que le choix est valide
         print("Choix invalide")
         entree = input("Entrez votre choix : ")
     if entree == "1":
@@ -94,7 +96,7 @@ def modifier_appareil():
         commande = "UPDATE Appareils SET numeroDeSerie_appareil = '" + numeroSerie + "' WHERE numeroDeSerie_appareil = '" + entreeP + "';"
     elif entree == "2":
         commande = "SELECT * FROM ModeleAppareils;"
-        modeles = db.executer_commande_sql( commande)
+        modeles = db.executer_commande_sql(commande)
         db.afficher_resultats(modeles)
         modele = input("Entrez le nouveau modèle : ")
         while not const.verifierSiColonneExiste(modele, modeles):
@@ -124,14 +126,14 @@ def modifier_modele():
     """
     # on recupere d'abord déjà la liste des personnes pour choisir laquelle on veut modifier
     commande = "SELECT * FROM ModeleAppareils;"
-    execution = db.executer_commande_sql( commande)
+    execution = db.executer_commande_sql(commande)
     db.afficher_resultats(execution)
-    #on recupere ensuite le numero de la personne à modifier
+    # on recupere ensuite le numero de la personne à modifier
     entreeP = input("Entrez le numéro du modèle à modifier : ")
-    while not const.verifierSiColonneExiste(entreeP, execution):    #on verifie que le numero existe bien
+    while not const.verifierSiColonneExiste(entreeP, execution):  # on verifie que le numero existe bien
         print("Le numéro entré n'existe pas")
         entreeP = input("Entrez le numéro du modèle à modifier : ")
-    #on recupere ensuite le champ à modifier
+    # on recupere ensuite le champ à modifier
     print("Quel champ voulez-vous modifier ?")
     print("1. Marque")
     print("2. Modèle")
@@ -139,7 +141,7 @@ def modifier_modele():
     print("4. Processeur")
     print("5. Type appareil")
     entree = input("Entrez votre choix : ")
-    while entree != "1" and entree != "2" and entree != "3" and entree != "4" and entree != "5":    #on verifie que le choix est valide
+    while entree != "1" and entree != "2" and entree != "3" and entree != "4" and entree != "5":  # on verifie que le choix est valide
         print("Choix invalide")
         entree = input("Entrez votre choix : ")
     if entree == "1":
@@ -162,17 +164,18 @@ def modifier_modele():
         for i in range(len(type)):
             print(str(i) + ". " + type[i])
         typeAppareil = input("Entrez le nouveau type d'appareil : ")
-        while not (const.entreeEstEntier(typeAppareil) and int(typeAppareil) >= 0 and  int(typeAppareil) < len(type)):
+        while not (const.entreeEstEntier(typeAppareil) and 0 <= int(typeAppareil) < len(type)):
             print("Le type d'appareil n'existe pas, veuillez en choisir un dans la liste")
             typeAppareil = input("Entrez le type d'appareil : ")
-        commande = "UPDATE ModeleAppareils SET type_appareil = '" + type[int(typeAppareil)] + "' WHERE numero_appareil = " + entreeP + ";"
+        commande = "UPDATE ModeleAppareils SET type_appareil = '" + type[
+            int(typeAppareil)] + "' WHERE numero_appareil = " + entreeP + ";"
     try:
-        db.executer_commande_sql( commande)
+        db.executer_commande_sql(commande)
     except Exception as e:
         print("Erreur lors de la modification", e)
     menu_modifier_donnees()
 
-    
+
 def modifier_reparation():
     """
     Fonction qui permet de modifier un champ d'une réparation
@@ -180,14 +183,14 @@ def modifier_reparation():
     """
     # on recupere d'abord déjà la liste des personnes pour choisir laquelle on veut modifier
     commande = "SELECT * FROM Reparations;"
-    execution = db.executer_commande_sql( commande)
+    execution = db.executer_commande_sql(commande)
     db.afficher_resultats(execution)
-    #on recupere ensuite le numero de la personne à modifier
+    # on recupere ensuite le numero de la personne à modifier
     entreeP = input("Entrez le numéro de la réparation à modifier : ")
-    while not const.verifierSiColonneExiste(entreeP, execution):    #on verifie que le numero existe bien
+    while not const.verifierSiColonneExiste(entreeP, execution):  # on verifie que le numero existe bien
         print("Le numéro entré n'existe pas")
         entreeP = input("Entrez le numéro du modèle de la réparation : ")
-    #on recupere ensuite le champ à modifier
+    # on recupere ensuite le champ à modifier
     print("Quel champ voulez-vous modifier ?")
     print("1. Appareil réparé")
     print("2. Evènement (lors duquel la réparation a eu lieu)")
@@ -195,12 +198,12 @@ def modifier_reparation():
     print("4. Durée de la réparation")
     print("5. Description de la réparation")
     entree = input("Entrez votre choix : ")
-    while entree != "1" and entree != "2" and entree != "3" and entree != "4" and entree != "5":    #on verifie que le choix est valide
+    while entree != "1" and entree != "2" and entree != "3" and entree != "4" and entree != "5":  # on verifie que le choix est valide
         print("Choix invalide")
         entree = input("Entrez votre choix : ")
     if entree == "1":
         commande = "SELECT * FROM Appareils;"
-        appareils = db.executer_commande_sql( commande)
+        appareils = db.executer_commande_sql(commande)
         db.afficher_resultats(appareils)
         appareilSel = input("Entrez le numéro de série du nouvel appareil : ")
         while not const.verifierSiColonneExiste(appareilSel, appareils):
@@ -209,7 +212,7 @@ def modifier_reparation():
         commande = "UPDATE Reparations SET appareil_repare = '" + appareilSel + "' WHERE numero_reparation = " + entreeP + ";"
     elif entree == "2":
         commande = "SELECT * FROM Evenements;"
-        evenements = db.executer_commande_sql( commande)
+        evenements = db.executer_commande_sql(commande)
         db.afficher_resultats(evenements)
         evenementSel = input("Entrez le numéro de l'évènement : ")
         while not const.verifierSiColonneExiste(evenementSel, evenements):
@@ -232,10 +235,11 @@ def modifier_reparation():
         description = input("Entrez la nouvelle description : ")
         commande = "UPDATE Reparations SET description_reparation = '" + description + "' WHERE numero_reparation = " + entreeP + ";"
     try:
-        db.executer_commande_sql( commande)
+        db.executer_commande_sql(commande)
     except Exception as e:
         print("Erreur lors de la modification", e)
     menu_modifier_donnees()
+
 
 def modifier_evenement():
     """
@@ -244,21 +248,21 @@ def modifier_evenement():
     """
     # on recupere d'abord déjà la liste des personnes pour choisir laquelle on veut modifier
     commande = "SELECT * FROM Evenements;"
-    execution = db.executer_commande_sql( commande)
+    execution = db.executer_commande_sql(commande)
     db.afficher_resultats(execution)
-    #on recupere ensuite le numero de la personne à modifier
+    # on recupere ensuite le numero de la personne à modifier
     entreeP = input("Entrez le numéro de l'évènement à modifier : ")
-    while not const.verifierSiColonneExiste(entreeP, execution):    #on verifie que le numero existe bien
+    while not const.verifierSiColonneExiste(entreeP, execution):  # on verifie que le numero existe bien
         print("Le numéro entré n'existe pas")
         entreeP = input("Entrez le numéro de l'évènement à modifier : ")
-    #on recupere ensuite le champ à modifier
+    # on recupere ensuite le champ à modifier
     print("Quel champ voulez-vous modifier ?")
     print("1. Date de l'évènement")
     print("2. Heure de début de l'évènement")
     print("3. Heure de fin de l'évènement")
     print("4. Ville de l'évènement")
     entree = input("Entrez votre choix : ")
-    while entree != "1" and entree != "2" and entree != "3" and entree != "4":    #on verifie que le choix est valide
+    while entree != "1" and entree != "2" and entree != "3" and entree != "4":  # on verifie que le choix est valide
         print("Choix invalide")
         entree = input("Entrez votre choix : ")
     if entree == "1":
@@ -283,8 +287,7 @@ def modifier_evenement():
         ville = input("Entrez la nouvelle ville : ")
         commande = "UPDATE Evenements SET ville_evenement = '" + ville + "' WHERE numero_evenement = " + entreeP + ";"
     try:
-        db.executer_commande_sql( commande)
+        db.executer_commande_sql(commande)
     except Exception as e:
         print("Erreur lors de la modification", e)
     menu_modifier_donnees()
-

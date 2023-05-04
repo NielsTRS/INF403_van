@@ -50,7 +50,7 @@ def mise_a_jour_bd(conn: sqlite3.Connection, file: str):
     conn.commit()
 
 
-def executer_commande_sql(commande: str, file ="data/van.db") -> list:
+def executer_commande_sql(commande: str, file="data/van.db") -> list:
     """
     Exécute une commande SQL et retourne le résultat sous forme de liste (pour un SELECT par exemple)
 
