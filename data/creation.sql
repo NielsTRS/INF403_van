@@ -11,7 +11,8 @@ CREATE TABLE Personnes
     nom_personne    VARCHAR(255) NOT NULL,
     prenom_personne VARCHAR(255) NOT NULL,
     email_personne  VARCHAR(255),
-    CONSTRAINT pk_pers_num PRIMARY KEY (numero_personne AUTOINCREMENT)
+    CONSTRAINT pk_pers_num PRIMARY KEY (numero_personne AUTOINCREMENT),
+    CONSTRAINT unique_email UNIQUE(email_personne)
 );
 
 CREATE TABLE ModeleAppareils
@@ -33,6 +34,7 @@ CREATE TABLE Appareils
     numero_appareil        INTEGER      NOT NULL,
     proprietaire_appareil  INTEGER      NOT NULL,
     CONSTRAINT pk_app_num_serie PRIMARY KEY (numeroDeSerie_appareil),
+    CONSTRAINT unique_numeroSerie UNIQUE(numeroDeSerie_appareil)
     CONSTRAINT fk_app_num FOREIGN KEY (numero_appareil) REFERENCES ModeleAppareils (numero_appareil) ON DELETE CASCADE,
     CONSTRAINT fk_app_pers FOREIGN KEY (proprietaire_appareil) REFERENCES Personnes (numero_personne) ON DELETE CASCADE
 );

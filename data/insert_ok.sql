@@ -17,7 +17,7 @@ INSERT INTO Appareils
 VALUES ("ABC123", 2, 2);
 
 INSERT INTO Evenements
-VALUES (1, '2023-05-01', '14:00:00', '17:00:00' , 'Grenoble');
+VALUES (1, '2023-05-01', '14:00', '17:00' , 'Grenoble');
 
 INSERT INTO Reparations ('appareil_repare', 'evenement_reparation', 'prix_reparation', 'duree_reparation', 'description_reparation')
 VALUES ("MG4HQ1", 1, 20.99, 20, 'Remplacement de la ram');

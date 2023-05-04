@@ -8,7 +8,7 @@ INSERT INTO Appareils
 VALUES (1, 1, 1);
 
 INSERT INTO Evenements
-VALUES ('2023-05-01', '14:00:00', '18:00:00', 'Grenoble');
+VALUES ('2023-05-01', '14:00', '18:00', 'Grenoble');
 
 INSERT INTO Reparations
 VALUES (1, 1, 1, 20.99, 20, 'Remplacement de la ram');

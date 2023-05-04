@@ -19,6 +19,11 @@ tables = {
         "nomPlur" : "des évènements",
         "primary_key": "numero_evenement",
     },
+    "ModeleAppareils":{
+        "nomSing" : "du modèle",
+        "nomPlur" : "des modèles",
+        "primary_key": "numero_appareil",
+    }
 }
 
 def getSingularTableName(table):
