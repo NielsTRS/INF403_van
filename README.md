@@ -9,5 +9,4 @@ sqlite3
 
 Pour lancer le programme : 
 
- $ python3
-    python3 main.py
+python3 main.py
